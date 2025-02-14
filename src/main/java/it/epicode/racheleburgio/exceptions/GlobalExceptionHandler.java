@@ -1,4 +1,4 @@
-package it.epicode.racheleburgio.Exceptions;
+package it.epicode.racheleburgio.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

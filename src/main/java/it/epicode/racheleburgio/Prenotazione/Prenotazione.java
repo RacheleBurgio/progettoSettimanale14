@@ -1,8 +1,8 @@
-package it.epicode.racheleburgio.Prenotazione;
+package it.epicode.racheleburgio.prenotazione;
 
 
-import it.epicode.racheleburgio.Dipendente.Dipendente;
-import it.epicode.racheleburgio.Viaggio.Viaggio;
+import it.epicode.racheleburgio.dipendente.Dipendente;
+import it.epicode.racheleburgio.viaggio.Viaggio;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

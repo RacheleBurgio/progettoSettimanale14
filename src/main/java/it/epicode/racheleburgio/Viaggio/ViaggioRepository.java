@@ -1,4 +1,4 @@
-package it.epicode.racheleburgio.Viaggio;
+package it.epicode.racheleburgio.viaggio;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

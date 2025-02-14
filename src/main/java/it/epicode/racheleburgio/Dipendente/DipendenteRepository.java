@@ -1,4 +1,4 @@
-package it.epicode.racheleburgio.Dipendente;
+package it.epicode.racheleburgio.dipendente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

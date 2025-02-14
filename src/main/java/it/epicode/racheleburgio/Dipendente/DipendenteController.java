@@ -1,32 +1,26 @@
-package it.epicode.racheleburgio.Dipendente;
+package it.epicode.racheleburgio.dipendente;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import java.io.IOException;
 
 @RestController
-@RequestMapping("/api/dipendenti")
+@RequestMapping("/dipendenti")
 public class DipendenteController {
 
     @Autowired
-    private DipendenteRepository dipendenteRepository;
+    private DipendenteService dipendenteService;
 
-    @Operation(summary = "Ottieni tutti i dipendenti")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Lista di dipendenti ottenuta con successo")
-    })
-    @GetMapping
-    public List<Dipendente> getAllDipendenti() {
-        return dipendenteRepository.findAll();
-    }
-
-    @Operation(summary = "Aggiungi un dipendente")
-    @PostMapping
-    public Dipendente createDipendente(@RequestBody Dipendente dipendente) {
-        return dipendenteRepository.save(dipendente);
+    @PostMapping("/{id}/upload")
+    public ResponseEntity<String> uploadProfileImage(@PathVariable Long id, @RequestParam("file") MultipartFile file) {
+        try {
+            String imageUrl = dipendenteService.uploadProfileImage(file);
+            return ResponseEntity.ok("Immagine caricata con successo: " + imageUrl);
+        } catch (IOException e) {
+            return ResponseEntity.status(500).body("Errore durante il caricamento dell'immagine");
+        }
     }
 }

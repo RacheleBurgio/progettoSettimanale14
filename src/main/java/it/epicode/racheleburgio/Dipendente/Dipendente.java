@@ -1,4 +1,4 @@
-package it.epicode.racheleburgio.Dipendente;
+package it.epicode.racheleburgio.dipendente;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

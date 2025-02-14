@@ -1,54 +1,30 @@
-package it.epicode.racheleburgio.Prenotazione;
+package it.epicode.racheleburgio.prenotazione;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDate;
 
 @RestController
-@RequestMapping("/api/prenotazioni")
+@RequestMapping("/prenotazioni")
 public class PrenotazioneController {
 
     @Autowired
-    private PrenotazioneRepository prenotazioneRepository;
+    private PrenotazioneService prenotazioneService;
 
-    @Operation(summary = "Ottieni tutte le prenotazioni")
-    @GetMapping
-    public List<Prenotazione> getAllPrenotazioni() {
-        return prenotazioneRepository.findAll();
-    }
+    @PostMapping("/prenota")
+    public ResponseEntity<String> prenotaViaggio(
+            @RequestParam Long dipendenteId,
+            @RequestParam Long viaggioId,
+            @RequestParam LocalDate dataPrenotazione) {
 
-    @Operation(summary = "Ottieni una prenotazione per ID")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Prenotazione trovata"),
-            @ApiResponse(responseCode = "404", description = "Prenotazione non trovata")
-    })
-    @GetMapping("/{id}")
-    public ResponseEntity<Prenotazione> getPrenotazioneById(@PathVariable Long id) {
-        Optional<Prenotazione> prenotazione = prenotazioneRepository.findById(id);
-        return prenotazione.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
-    }
+        String risultato = prenotazioneService.prenotaViaggio(dipendenteId, viaggioId, dataPrenotazione);
 
-    @Operation(summary = "Crea una nuova prenotazione")
-    @PostMapping
-    public Prenotazione createPrenotazione(@RequestBody Prenotazione prenotazione) {
-        return prenotazioneRepository.save(prenotazione);
-    }
-
-    @Operation(summary = "Elimina una prenotazione per ID")
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePrenotazione(@PathVariable Long id) {
-        if (prenotazioneRepository.existsById(id)) {
-            prenotazioneRepository.deleteById(id);
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
+        if (risultato.startsWith("Errore")) {
+            return ResponseEntity.badRequest().body(risultato);
         }
+
+        return ResponseEntity.ok(risultato);
     }
 }

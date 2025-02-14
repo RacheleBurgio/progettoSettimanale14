@@ -1,4 +1,4 @@
-package it.epicode.racheleburgio.Viaggio;
+package it.epicode.racheleburgio.viaggio;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
-@Table(name = "dipendenti")
+@Table(name = "Viaggio")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
